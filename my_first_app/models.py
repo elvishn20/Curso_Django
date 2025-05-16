@@ -15,10 +15,19 @@ class Publisher(models.Model):
     def __str__(self):
         return self.name
 
+class Author(models.Model):
+    name = models.TextField(max_length=200)
+    birth_date = models.DateField()
+
+    def __str__(self):
+        return self.name
+
 class Book(models.Model):
     title = models.TextField(max_length=200)
     publication_date = models.DateField()
     publisher = models.ForeignKey(Publisher, on_delete=models.CASCADE) # Hace que si se borra un editor, tambien se borra el libro
+    authors = models.ManyToManyField(Author, related_name="authors") # Toma varios autores creados
 
     def __str__(self):
         return self.title
+
